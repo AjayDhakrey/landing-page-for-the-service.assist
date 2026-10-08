@@ -1,0 +1,7 @@
+{
+  "name": "Service Assist",
+  "description": "Expert Home Services, Delivered to Your Doorstep in Minutes. On-demand verified electricians, plumbers, deep cleaners, and appliance repair with upfront pricing and AI diagnostics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
