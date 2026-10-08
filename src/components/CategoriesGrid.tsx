@@ -169,8 +169,8 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
           </div>
         </div>
 
-        {/* 8 Cards Grid in 2 Rows of 4 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        {/* 8 Cards Grid in 2 Columns on Mobile, 4 Columns on Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {CATEGORIES_DATA.map((cat) => {
             const Icon = cat.icon;
             const isSelected = selectedCategory === cat.id;
@@ -179,7 +179,7 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
               <div
                 key={cat.id}
                 onClick={() => handleCardClick(cat.id)}
-                className={`group rounded-3xl p-5 border ${cat.borderColor} ${cat.bgColor} card-3d-interactive cursor-pointer flex flex-col justify-between text-left relative overflow-hidden ${
+                className={`group rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border ${cat.borderColor} ${cat.bgColor} card-3d-interactive cursor-pointer flex flex-col justify-between text-left relative overflow-hidden transition-all duration-300 ${
                   isSelected ? 'ring-2 ring-emerald-500 shadow-lg' : ''
                 }`}
               >
@@ -187,23 +187,23 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 {/* Top Section: Icon & Name */}
-                <div className="space-y-3 relative z-10">
+                <div className="space-y-2 sm:space-y-3 relative z-10">
                   <div 
                     style={{ transform: 'translateZ(20px)' }}
-                    className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
+                    className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white shadow-xs flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
                   >
-                    <Icon className={`w-6 h-6 ${cat.iconColor}`} />
+                    <Icon className={`w-4.5 h-4.5 sm:w-6 sm:h-6 ${cat.iconColor}`} />
                   </div>
-                  <h3 className="text-base font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
+                  <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
                     {cat.name}
                   </h3>
                 </div>
 
                 {/* Bottom Row: Starting Price & Book Now Button */}
-                <div className="pt-5 flex items-center justify-between border-t border-black/5 mt-4 relative z-10">
+                <div className="pt-3 sm:pt-5 flex items-center justify-between border-t border-black/5 mt-3 sm:mt-4 relative z-10 gap-1">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block leading-tight">From</span>
-                    <span className="text-base font-black text-slate-900">₹{cat.startingPrice}</span>
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block leading-tight">From</span>
+                    <span className="text-xs xs:text-sm sm:text-base font-black text-slate-900">₹{cat.startingPrice}</span>
                   </div>
 
                   <button
@@ -211,10 +211,10 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
                       e.stopPropagation();
                       handleCardClick(cat.id);
                     }}
-                    className="px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-xs shadow-sm shadow-emerald-600/30 transition-all flex items-center gap-1 cursor-pointer group-hover:shadow-md"
+                    className="px-2 xs:px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-[10px] sm:text-xs shadow-xs shadow-emerald-600/30 transition-all flex items-center gap-0.5 sm:gap-1 cursor-pointer group-hover:shadow-md shrink-0"
                   >
-                    <span>Book Now</span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    <span>Book</span>
+                    <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 </div>
               </div>
