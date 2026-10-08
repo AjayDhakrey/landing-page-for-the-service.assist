@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, ChevronLeft, ChevronRight, CheckCircle2, Pause, Play, Sparkles } from 'lucide-react';
+import { Star, CheckCircle2, Sparkles } from 'lucide-react';
 import { TESTIMONIALS } from '../data/servicesData';
 
 const REVIEW_AVATARS: Record<string, string> = {
@@ -17,12 +17,8 @@ const REVIEW_AVATARS: Record<string, string> = {
 const DUPLICATED_REVIEWS = [...TESTIMONIALS, ...TESTIMONIALS];
 
 export const Testimonials: React.FC = () => {
-  const [direction, setDirection] = useState<'left' | 'right'>('left');
   const [isPaused, setIsPaused] = useState(false);
-  const [speedMultiplier, setSpeedMultiplier] = useState<1 | 1.5 | 0.7>(1);
-
-  // Compute animation duration (base 36s)
-  const durationSeconds = (36 / speedMultiplier).toFixed(1);
+  const durationSeconds = '36.0';
 
   return (
     <section className="py-12 sm:py-16 bg-[#fafcfb] border-b border-slate-100 overflow-hidden relative">
@@ -42,62 +38,6 @@ export const Testimonials: React.FC = () => {
               Continuous live feedback from verified homeowners across India. Hover any review to pause.
             </p>
           </div>
-
-          {/* Interactive Loop Controls */}
-          <div className="flex items-center gap-2 self-start sm:self-end">
-            {/* Scroll Left Direction */}
-            <button
-              type="button"
-              onClick={() => {
-                setDirection('right');
-                setIsPaused(false);
-              }}
-              title="Reverse scroll direction"
-              aria-label="Scroll reviews to right"
-              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
-                direction === 'right'
-                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm ring-2 ring-emerald-500/20'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900 shadow-xs'
-              }`}
-            >
-              <ChevronLeft className="w-4.5 h-4.5" />
-            </button>
-
-            {/* Pause / Play Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsPaused(!isPaused)}
-              title={isPaused ? 'Resume auto-scroll' : 'Pause auto-scroll'}
-              aria-label={isPaused ? 'Resume auto-scroll' : 'Pause auto-scroll'}
-              className="w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 flex items-center justify-center transition-all cursor-pointer shadow-xs"
-            >
-              {isPaused ? <Play className="w-4 h-4 fill-emerald-600 text-emerald-600 ml-0.5" /> : <Pause className="w-4 h-4" />}
-            </button>
-
-            {/* Scroll Right Direction */}
-            <button
-              type="button"
-              onClick={() => {
-                setDirection('left');
-                setIsPaused(false);
-              }}
-              title="Scroll forward"
-              aria-label="Scroll reviews to left"
-              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
-                direction === 'left'
-                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm ring-2 ring-emerald-500/20'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900 shadow-xs'
-              }`}
-            >
-              <ChevronRight className="w-4.5 h-4.5" />
-            </button>
-
-            {/* Loop indicator pill */}
-            <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-[11px] font-semibold text-slate-600 shadow-xs ml-1">
-              <span className={`w-2 h-2 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-emerald-500 animate-ping'}`} />
-              <span>{isPaused ? 'Paused' : 'Continuous Loop'}</span>
-            </div>
-          </div>
         </div>
 
       </div>
@@ -116,9 +56,7 @@ export const Testimonials: React.FC = () => {
 
         {/* Infinite Moving Flex Row */}
         <div
-          className={`flex gap-5 w-max select-none ${
-            direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'
-          }`}
+          className="flex gap-5 w-max select-none animate-marquee-left"
           style={{
             animationDuration: `${durationSeconds}s`,
             animationPlayState: isPaused ? 'paused' : 'running',

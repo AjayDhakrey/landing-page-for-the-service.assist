@@ -228,22 +228,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({ onBookSe
                     playsInline
                     className="w-full h-auto object-cover rounded-3xl block shadow-inner"
                   />
-                  {/* Elevated 3D Badges on Z-plane */}
-                  <div 
-                    style={{ transform: 'translateZ(35px)' }}
-                    className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-semibold border border-white/20 shadow-lg pointer-events-none z-10"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>AI Smart Diagnostic</span>
-                  </div>
-
-                  <div 
-                    style={{ transform: 'translateZ(30px)' }}
-                    className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-slate-900 text-[10px] sm:text-[11px] font-bold shadow-xl border border-slate-100 pointer-events-none z-10"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-spin" style={{ animationDuration: '6s' }} />
-                    <span>3D Interactive</span>
-                  </div>
                 </div>
               </Tilt3DCard>
             </div>
