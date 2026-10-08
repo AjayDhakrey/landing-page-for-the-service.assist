@@ -165,27 +165,27 @@ export const Hero: React.FC<HeroProps> = ({
 
             {/* Social Proof Bar */}
             <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-slate-600">
-              {/* Overlapping customer avatars */}
+              {/* Overlapping customer avatars in Retina HD */}
               <div className="flex -space-x-2">
                 <img 
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" 
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=90" 
                   alt="Customer" 
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs" 
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-xs" 
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80" 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=90" 
                   alt="Customer" 
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs" 
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-xs" 
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&h=80&q=80" 
+                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=160&h=160&q=90" 
                   alt="Customer" 
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs" 
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-xs" 
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=80" 
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&h=160&q=90" 
                   alt="Customer" 
-                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs" 
+                  className="w-8 h-8 rounded-full border-2 border-white object-cover shadow-xs" 
                 />
               </div>
 
@@ -210,12 +210,14 @@ export const Hero: React.FC<HeroProps> = ({
             <Tilt3DCard maxTilt={6} perspective={1400} glare={false} className="w-full max-w-[430px] sm:max-w-[470px] relative z-10 pointer-events-none">
               <div className="relative w-full aspect-[3/4] min-h-[520px] sm:min-h-[580px] flex justify-center items-end preserve-3d">
 
-                {/* Isolated Technician Cutout matching Image 2 reference (NO square box, standing seamlessly on scene) */}
+                {/* Isolated Technician Cutout in 4K Ultra HD (NO square box, standing seamlessly on scene) */}
                 <img
                   src="/hero-technician-cutout.png"
                   alt="Service Assist Technician"
+                  fetchPriority="high"
+                  decoding="async"
                   style={{ transform: 'translateZ(20px)' }}
-                  className="w-full max-w-[370px] sm:max-w-[420px] h-auto object-contain object-bottom drop-shadow-[0_20px_35px_rgba(4,120,87,0.18)] select-none pointer-events-none transition-transform"
+                  className="w-full max-w-[370px] sm:max-w-[420px] h-auto object-contain object-bottom drop-shadow-[0_12px_24px_rgba(0,0,0,0.08)] drop-shadow-[0_28px_42px_rgba(4,120,87,0.22)] select-none pointer-events-none transition-transform"
                 />
 
                 {/* Floating Badge 1: AC Repair (Top Left) */}
