@@ -106,7 +106,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 {bookingService ? bookingService.title : `${cartCount} Selected Service${cartCount > 1 ? 's' : ''}`}
               </p>
               <p className="text-[11px] font-bold text-emerald-700">
-                ₹{bookingService ? bookingService.price : cartTotal} · 30-Day Rework Guarantee
+                Verified Pro Dispatch · 30-Day Rework Guarantee
               </p>
             </div>
           </div>

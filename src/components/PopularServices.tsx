@@ -56,7 +56,7 @@ export const PopularServices: React.FC<PopularServicesProps> = ({
               Most Booked Home Services
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
-              Clear upfront rates with inclusions, certified tools, and a 30-day rework warranty.
+              Certified doorstep experts, complete inclusions, genuine tools, and a 30-day rework warranty.
             </p>
           </div>
 
@@ -141,40 +141,16 @@ export const PopularServices: React.FC<PopularServicesProps> = ({
                   </div>
                 </div>
 
-                {/* Bottom Price Row & Book Now CTA */}
+                {/* Bottom Service Specs Row */}
                 <div className="px-4 sm:px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between mt-auto">
-                  <div>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-lg font-black text-slate-900">₹{item.price}</span>
-                      {item.originalPrice && (
-                        <span className="text-xs text-slate-400 line-through">₹{item.originalPrice}</span>
-                      )}
-                    </div>
-                    {item.discountPercent && (
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
-                        {item.discountPercent}% OFF
-                      </span>
-                    )}
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>30-Day Warranty</span>
                   </div>
 
-                  {currentUser ? (
-                    <button
-                      onClick={() => onInstantBook(item)}
-                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer flex items-center gap-1"
-                    >
-                      <span>Request Pro</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => onInstantBook(item)}
-                      className="px-3 sm:px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white font-bold text-xs shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
-                      title="Sign in to book this service"
-                    >
-                      <User className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Sign In to Book</span>
-                    </button>
-                  )}
+                  <span className="text-xs font-semibold text-slate-500">
+                    ~{item.durationMinutes} mins
+                  </span>
                 </div>
 
               </div>

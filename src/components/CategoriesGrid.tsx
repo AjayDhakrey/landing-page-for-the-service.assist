@@ -199,23 +199,15 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
                   </h3>
                 </div>
 
-                {/* Bottom Row: Starting Price & Book Now Button */}
-                <div className="pt-3 sm:pt-5 flex items-center justify-between border-t border-black/5 mt-3 sm:mt-4 relative z-10 gap-1">
-                  <div>
-                    <span className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 block leading-tight">From</span>
-                    <span className="text-xs xs:text-sm sm:text-base font-black text-slate-900">₹{cat.startingPrice}</span>
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCardClick(cat.id);
-                    }}
-                    className="px-2 xs:px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-[10px] sm:text-xs shadow-xs shadow-emerald-600/30 transition-all flex items-center gap-0.5 sm:gap-1 cursor-pointer group-hover:shadow-md shrink-0"
-                  >
-                    <span>Explore</span>
-                    <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
+                {/* Bottom Row: Status / Explore */}
+                <div className="pt-2.5 sm:pt-4 flex items-center justify-between border-t border-black/5 mt-3 sm:mt-4 relative z-10">
+                  <span className="text-[10px] sm:text-xs font-semibold text-emerald-700 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Verified Pros</span>
+                  </span>
+                  <span className="text-[11px] font-bold text-slate-400 group-hover:text-emerald-600 transition-colors flex items-center gap-0.5">
+                    View <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
                 </div>
               </div>
             );

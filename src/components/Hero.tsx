@@ -150,8 +150,8 @@ export const Hero: React.FC<HeroProps> = ({
                 <span>Verified Experts</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00dfa2] shrink-0 stroke-[2.5]" />
-                <span>Transparent Pricing</span>
+                <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00dfa2] shrink-0 stroke-[2.5]" />
+                <span>Certified Quality</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00dfa2] shrink-0 stroke-[2.5]" />
@@ -232,7 +232,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
                   <div>
                     <p className="text-[10px] xs:text-[11px] sm:text-xs font-black leading-tight text-slate-900">AC Repair</p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-semibold">From ₹399</p>
+                    <p className="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">Certified Pro</p>
                   </div>
                 </button>
 
@@ -269,7 +269,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
                   <div>
                     <p className="text-[10px] xs:text-[11px] sm:text-xs font-black leading-tight text-slate-900">Plumber</p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-semibold">From ₹199</p>
+                    <p className="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">Doorstep Repair</p>
                   </div>
                 </button>
 
@@ -285,7 +285,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
                   <div>
                     <p className="text-[10px] xs:text-[11px] sm:text-xs font-black leading-tight text-slate-900">Electrician</p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-semibold">From ₹199</p>
+                    <p className="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">Safety Certified</p>
                   </div>
                 </button>
 
@@ -301,7 +301,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
                   <div>
                     <p className="text-[10px] xs:text-[11px] sm:text-xs font-black leading-tight text-slate-900">Cleaning</p>
-                    <p className="text-[9px] sm:text-[10px] text-slate-400 font-semibold">From ₹249</p>
+                    <p className="text-[9px] sm:text-[10px] text-emerald-600 font-semibold">Deep Clean</p>
                   </div>
                 </button>
 

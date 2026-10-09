@@ -84,11 +84,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 </div>
 
                 <div className="text-right pl-4">
-                  <span className="font-mono font-bold text-slate-900 text-sm block">
-                    ₹{service.price}
-                  </span>
-                  <span className="text-[11px] text-emerald-700 font-bold group-hover:underline inline-flex items-center gap-0.5">
-                    Select <ArrowRight className="w-3 h-3" />
+                  <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full inline-flex items-center gap-0.5 group-hover:bg-emerald-100 transition-colors">
+                    Explore <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
               </div>

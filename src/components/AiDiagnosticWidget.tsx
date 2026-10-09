@@ -7,7 +7,7 @@ import {
   CheckCircle2, 
   Wrench,
   Loader2,
-  User
+  ShieldCheck
 } from 'lucide-react';
 import { DiagnosticResult, ServiceItem, UserProfile } from '../types';
 import { SERVICES } from '../data/servicesData';
@@ -62,7 +62,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
           category: 'Plumbing & Pipe Repair',
           probableCause: 'Corroded valve stem, worn washer seal, or excess hydrostatic line pressure.',
           recommendedPackage: 'Pipe Leakage & Tap Repair',
-          estimatedCostRange: '₹249 – ₹499',
           urgency: 'Medium Priority (Dispatch in 15 mins)',
           actionSteps: [
             'Turn off the main quarter-turn angle stop valve under the fixture.',
@@ -75,7 +74,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
           category: 'Electrical & MCB Diagnostics',
           probableCause: 'Overloaded terminal connection, carbon arcing, or burnt modular switch contacts.',
           recommendedPackage: 'Switchboard & Socket Repair',
-          estimatedCostRange: '₹199 – ₹399',
           urgency: 'High Priority (Immediate Dispatch)',
           actionSteps: [
             'Avoid touching the switchboard or operating high-wattage appliances.',
@@ -88,7 +86,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
           category: 'Home Deep Cleaning',
           probableCause: 'Deep embedded allergens, stubborn hard water scaling, and fabric dust mites.',
           recommendedPackage: 'Home Deep Cleaning (2 BHK)',
-          estimatedCostRange: '₹999 – ₹2,499',
           urgency: 'Standard Priority',
           actionSteps: [
             'Clear delicate or valuable countertop items before arrival.',
@@ -101,7 +98,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
           category: 'Air Conditioning (AC) Service',
           probableCause: 'Blocked evaporator cooling coil, low refrigerant gas, or clogged drain pipe.',
           recommendedPackage: 'AC Foam Jet Deep Cleaning',
-          estimatedCostRange: '₹499 – ₹799',
           urgency: 'Medium Priority (Dispatch in 15 mins)',
           actionSteps: [
             'Turn off the AC power isolator switch to prevent compressor strain.',
@@ -118,17 +114,6 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     runDiagnosis(query);
-  };
-
-  const handleBookDiagnosedService = () => {
-    const matched = SERVICES.find(
-      (s) => result && (
-        s.title.toLowerCase().includes(result.recommendedPackage.toLowerCase()) ||
-        result.recommendedPackage.toLowerCase().includes(s.title.toLowerCase())
-      )
-    ) || SERVICES[0];
-
-    onBookService(matched);
   };
 
   return (
@@ -292,28 +277,18 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({
               </div>
             </div>
 
-            <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Estimated Cost</span>
-                <span className="text-2xl font-black text-slate-900">{result.estimatedCostRange}</span>
+            <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+                <div>
+                  <span className="text-xs font-bold text-slate-900 block">30-Day Service Guarantee</span>
+                  <span className="text-[11px] text-slate-500">Includes genuine manufacturer-approved parts & post-service testing</span>
+                </div>
               </div>
 
-              <button
-                onClick={handleBookDiagnosedService}
-                className="w-full sm:w-auto px-7 py-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-sm rounded-full shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {currentUser ? (
-                  <>
-                    <span>Request Diagnosed Pro</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                ) : (
-                  <>
-                    <User className="w-4 h-4 text-emerald-200" />
-                    <span>Sign In to Request Solution</span>
-                  </>
-                )}
-              </button>
+              <div className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200/60 shrink-0">
+                <span>Verified Diagnostic Solution</span>
+              </div>
             </div>
 
           </div>

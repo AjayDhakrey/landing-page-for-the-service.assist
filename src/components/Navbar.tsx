@@ -187,18 +187,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {/* Cart Trigger with Counter Badge */}
-            <button
-              onClick={onOpenCart}
-              className="relative p-1.5 sm:p-2 text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors cursor-pointer shrink-0"
-              aria-label="View bookings cart"
-            >
-              <ShoppingBag className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
-              {totalCartCount > 0 && (
+            {totalCartCount > 0 && (
+              <button
+                onClick={onOpenCart}
+                className="relative p-1.5 sm:p-2 text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors cursor-pointer shrink-0"
+                aria-label="View bookings cart"
+              >
+                <ShoppingBag className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
                 <span className="absolute -top-0.5 -right-0.5 bg-emerald-400 text-slate-950 font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow-xs ring-2 ring-[#070b14]">
                   {totalCartCount}
                 </span>
-              )}
-            </button>
+              </button>
+            )}
 
             {/* User Profile / Sign In Action */}
             {currentUser ? (
