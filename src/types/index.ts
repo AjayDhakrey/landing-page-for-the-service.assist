@@ -102,3 +102,9 @@ export interface BookingState {
     badge: string;
   };
 }
+
+export interface UserProfile {
+  name: string;
+  phone: string;
+  isLoggedIn: boolean;
+}

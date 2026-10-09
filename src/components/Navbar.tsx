@@ -10,15 +10,18 @@ import {
   X, 
   Briefcase,
   Wrench,
-  HelpCircle
+  HelpCircle,
+  LogOut
 } from 'lucide-react';
 import { CITIES } from '../data/servicesData';
-import { CartItem } from '../types';
+import { CartItem, UserProfile } from '../types';
 
 interface NavbarProps {
   currentCity: string;
   onCityChange: (city: string) => void;
   cartItems: CartItem[];
+  currentUser?: UserProfile | null;
+  onLogout?: () => void;
   onOpenCart: () => void;
   onOpenAuth?: () => void;
   onOpenBooking: () => void;
@@ -30,6 +33,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentCity,
   onCityChange,
   cartItems,
+  currentUser,
+  onLogout,
   onOpenCart,
   onOpenAuth,
   onOpenBooking,
@@ -38,7 +43,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const cityDropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -48,11 +55,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target as Node)) {
         setCityDropdownOpen(false);
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setCityDropdownOpen(false);
+        setUserMenuOpen(false);
         setMobileMenuOpen(false);
       }
     };
@@ -189,15 +200,62 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
-            {/* Login Trigger */}
-            {onOpenAuth && (
-              <button
-                onClick={onOpenAuth}
-                className="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/[0.08] rounded-xl border border-white/[0.08] transition-colors cursor-pointer shrink-0"
-              >
-                <User className="w-3.5 h-3.5 text-slate-400" />
-                <span>Login</span>
-              </button>
+            {/* User Profile / Login Trigger */}
+            {currentUser ? (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  type="button"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-100 hover:text-white bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 rounded-xl transition-all cursor-pointer"
+                  aria-label="User account"
+                >
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <User className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="max-w-[100px] truncate">
+                    {currentUser.name || `+91 ${currentUser.phone.slice(-4)}`}
+                  </span>
+                  <ChevronDown className={`w-3 h-3 text-emerald-400 transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Desktop User Dropdown Menu */}
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-60 bg-slate-900/98 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/80 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="flex items-center gap-2.5 pb-2.5 border-b border-slate-800">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center font-extrabold text-sm shadow-sm">
+                        {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold text-white truncate">{currentUser.name || 'Verified User'}</p>
+                        <p className="text-[11px] text-slate-400 font-mono">+91 {currentUser.phone}</p>
+                      </div>
+                    </div>
+
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          onLogout?.();
+                        }}
+                        className="w-full flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-xl transition-colors cursor-pointer text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              onOpenAuth && (
+                <button
+                  onClick={onOpenAuth}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/[0.08] rounded-xl border border-white/[0.08] transition-colors cursor-pointer shrink-0"
+                >
+                  <User className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Login</span>
+                </button>
+              )
             )}
 
             {/* Primary Action Button: Book Service */}
@@ -249,35 +307,61 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
           </div>
 
-          <div className="pt-2 border-t border-white/[0.08] flex items-center gap-2">
-            {onOpenAuth && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAuth();
-                }}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-slate-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] rounded-xl border border-white/[0.08] transition-colors cursor-pointer"
-              >
-                <User className="w-3.5 h-3.5 text-slate-400" />
-                <span>Login</span>
-              </button>
-            )}
+          <div className="pt-2 border-t border-white/[0.08]">
+            {currentUser ? (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between px-3 py-2 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <User className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-white truncate">{currentUser.name || 'Verified User'}</p>
+                      <p className="text-[10px] text-slate-400 font-mono">+91 {currentUser.phone}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onLogout?.();
+                    }}
+                    className="text-xs text-rose-400 hover:text-rose-300 font-bold px-2.5 py-1 rounded-lg hover:bg-rose-500/10 transition-colors shrink-0 cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                {onOpenAuth && (
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenAuth();
+                    }}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-slate-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] rounded-xl border border-white/[0.08] transition-colors cursor-pointer"
+                  >
+                    <User className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Login</span>
+                  </button>
+                )}
 
-            {onOpenPartnerModal && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenPartnerModal();
-                }}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/15 rounded-xl border border-emerald-500/20 transition-colors cursor-pointer"
-              >
-                <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Partner Pro</span>
-              </button>
+                {onOpenPartnerModal && (
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenPartnerModal();
+                    }}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/15 rounded-xl border border-emerald-500/20 transition-colors cursor-pointer"
+                  >
+                    <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Partner Pro</span>
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </div>
       )}
+
 
     </header>
   );

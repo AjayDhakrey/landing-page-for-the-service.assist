@@ -15,7 +15,7 @@ import {
   Tag,
   Compass
 } from 'lucide-react';
-import { CartItem, ServiceItem } from '../types';
+import { CartItem, ServiceItem, UserProfile } from '../types';
 import { OFFERS, CITIES } from '../data/servicesData';
 import { Tilt3DCard } from './Tilt3DCard';
 
@@ -26,6 +26,8 @@ interface BookingModalProps {
   currentCity: string;
   onClearCart: () => void;
   initialService?: ServiceItem | null;
+  currentUser?: UserProfile | null;
+  onRequireAuth?: () => void;
 }
 
 export const BookingModal: React.FC<BookingModalProps> = ({
@@ -35,14 +37,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   currentCity,
   onClearCart,
   initialService,
+  currentUser,
+  onRequireAuth,
 }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [step, setStep] = useState<'details' | 'tracking'>('details');
 
   // Form states
   const [slot, setSlot] = useState('instant');
-  const [name, setName] = useState('Aditi Sharma');
-  const [phone, setPhone] = useState('9876543210');
+  const [name, setName] = useState(currentUser?.name || 'Aditi Sharma');
+  const [phone, setPhone] = useState(currentUser?.phone || '9876543210');
   const [flat, setFlat] = useState('Flat 402, Tower B');
   const [street, setStreet] = useState('Palm Grove Heights, Sector 45');
   const [pincode, setPincode] = useState('110001');
@@ -67,6 +71,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       setItems([{ service: initialService, quantity: 1 }]);
     }
   }, [cartItems, initialService]);
+
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.name) setName(currentUser.name);
+      if (currentUser.phone) setPhone(currentUser.phone);
+    }
+  }, [currentUser]);
 
   // Live ETA countdown timer simulation
   useEffect(() => {
@@ -99,6 +110,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const handleConfirmBooking = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!currentUser) {
+      if (onRequireAuth) {
+        onRequireAuth();
+        return;
+      }
+    }
     try {
       const res = await fetch('/api/bookings', {
         method: 'POST',
@@ -250,9 +267,25 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
               {/* 3. Address & Contact Details */}
               <div className="space-y-3">
-                <label className="text-xs font-bold text-slate-700 block">
-                  Service Address &amp; Customer Details
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-slate-700 block">
+                    Service Address &amp; Customer Details
+                  </label>
+                  {currentUser ? (
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      Verified Account
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={onRequireAuth}
+                      className="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 underline cursor-pointer"
+                    >
+                      Sign In Required
+                    </button>
+                  )}
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <input

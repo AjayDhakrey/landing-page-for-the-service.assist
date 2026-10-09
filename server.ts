@@ -213,6 +213,24 @@ Return only JSON without markdown fences.`;
   }
 });
 
+// User Auth endpoints
+app.post('/api/auth/send-otp', (req, res) => {
+  const { phone } = req.body;
+  res.json({ success: true, message: `OTP sent to +91 ${phone}`, demoOtp: '1234' });
+});
+
+app.post('/api/auth/verify-otp', (req, res) => {
+  const { phone, otp, name } = req.body;
+  res.json({
+    success: true,
+    user: {
+      phone,
+      name: name || 'Homeowner',
+      isLoggedIn: true,
+    },
+  });
+});
+
 // Mock Booking/Order submission endpoint
 app.post('/api/bookings', (req, res) => {
   const { service, customer, address, slot, paymentMethod, total } = req.body;

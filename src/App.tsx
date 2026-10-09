@@ -14,7 +14,7 @@ import { BookingModal } from './components/BookingModal';
 import { CartDrawer } from './components/CartDrawer';
 import { AuthModal } from './components/AuthModal';
 import { SearchModal } from './components/SearchModal';
-import { CartItem, ServiceItem } from './types';
+import { CartItem, ServiceItem, UserProfile } from './types';
 import { SERVICES, CITIES } from './data/servicesData';
 import { CheckCircle2 } from 'lucide-react';
 
@@ -23,10 +23,24 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Cart state
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { service: SERVICES[0], quantity: 1 }
-  ]);
+  // Cart state - visitors start with an empty cart
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Authenticated user state
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
+    try {
+      const saved = localStorage.getItem('sa_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  // Intent tracker: holds service/checkout while asking visitor to sign in
+  const [pendingBooking, setPendingBooking] = useState<{
+    service?: ServiceItem | null;
+    isCartCheckout?: boolean;
+  } | null>(null);
 
   // Modals state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -80,15 +94,71 @@ export default function App() {
     showToast('Service removed from cart');
   };
 
+  // Main Booking Gate: Visitor can explore freely, but must sign in to confirm booking
   const handleInstantBook = (service?: ServiceItem) => {
-    if (service) {
-      setActiveBookingService(service);
-    } else if (cartItems.length > 0) {
-      setActiveBookingService(cartItems[0].service);
-    } else {
-      setActiveBookingService(SERVICES[0]);
+    const targetService = service || (cartItems.length > 0 ? cartItems[0].service : SERVICES[0]);
+
+    // If user is a visitor (not logged in), prompt for sign in first
+    if (!currentUser) {
+      setPendingBooking({ service: targetService, isCartCheckout: false });
+      setAuthModalOpen(true);
+      return;
     }
+
+    // User is logged in: proceed directly to booking modal
+    setActiveBookingService(targetService);
     setBookingModalOpen(true);
+  };
+
+  // Cart Checkout Gate: Requires sign in if visitor
+  const handleCartCheckout = () => {
+    setCartDrawerOpen(false);
+
+    if (!currentUser) {
+      setPendingBooking({
+        service: cartItems.length > 0 ? cartItems[0].service : null,
+        isCartCheckout: true,
+      });
+      setAuthModalOpen(true);
+      return;
+    }
+
+    setActiveBookingService(cartItems.length > 0 ? cartItems[0].service : null);
+    setBookingModalOpen(true);
+  };
+
+  // Auth Success: Saves user & immediately continues pending booking if any
+  const handleAuthSuccess = (phone: string, name?: string) => {
+    const user: UserProfile = {
+      phone,
+      name: name?.trim() || 'Homeowner',
+      isLoggedIn: true,
+    };
+    setCurrentUser(user);
+    try {
+      localStorage.setItem('sa_user', JSON.stringify(user));
+    } catch {}
+
+    showToast(`Welcome ${user.name}! Signed in with +91 ${phone}`);
+    setAuthModalOpen(false);
+
+    // Seamless handoff: Open booking modal with their requested service
+    if (pendingBooking) {
+      if (pendingBooking.service) {
+        setActiveBookingService(pendingBooking.service);
+      }
+      setBookingModalOpen(true);
+      setPendingBooking(null);
+    }
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    setCurrentUser(null);
+    try {
+      localStorage.removeItem('sa_user');
+    } catch {}
+    showToast('Signed out successfully');
   };
 
   return (
@@ -110,8 +180,13 @@ export default function App() {
           showToast(`Location updated to ${city}`);
         }}
         cartItems={cartItems}
+        currentUser={currentUser}
+        onLogout={handleLogout}
         onOpenCart={() => setCartDrawerOpen(true)}
-        onOpenAuth={() => setAuthModalOpen(true)}
+        onOpenAuth={() => {
+          setPendingBooking(null);
+          setAuthModalOpen(true);
+        }}
         onOpenBooking={() => handleInstantBook()}
         onOpenPartnerModal={() => setPartnerModalOpen(true)}
         onSearchClick={() => setSearchModalOpen(true)}
@@ -207,6 +282,12 @@ export default function App() {
         currentCity={currentCity}
         onClearCart={() => setCartItems([])}
         initialService={activeBookingService}
+        currentUser={currentUser}
+        onRequireAuth={() => {
+          setBookingModalOpen(false);
+          setPendingBooking({ service: activeBookingService, isCartCheckout: false });
+          setAuthModalOpen(true);
+        }}
       />
 
       <CartDrawer
@@ -215,18 +296,20 @@ export default function App() {
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
-        onCheckout={() => {
-          setCartDrawerOpen(false);
-          setBookingModalOpen(true);
-        }}
+        onCheckout={handleCartCheckout}
       />
 
       <AuthModal
         isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        onSuccess={(phone) => {
-          showToast(`Welcome! Logged in with +91 ${phone}`);
+        onClose={() => {
+          setAuthModalOpen(false);
+          setPendingBooking(null);
         }}
+        onSuccess={handleAuthSuccess}
+        bookingService={pendingBooking?.service}
+        isCartCheckout={pendingBooking?.isCartCheckout}
+        cartCount={cartItems.reduce((acc, i) => acc + i.quantity, 0)}
+        cartTotal={cartItems.reduce((acc, i) => acc + i.service.price * i.quantity, 0)}
       />
 
       <SearchModal
