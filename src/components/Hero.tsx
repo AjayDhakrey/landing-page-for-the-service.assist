@@ -253,7 +253,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
                   <div className="text-left">
                     <p className="text-[10px] xs:text-[11px] sm:text-xs font-black leading-tight">10 min</p>
-                    <p className="text-[9px] sm:text-[10px] font-bold text-slate-900/80">Quick Booking</p>
+                    <p className="text-[9px] sm:text-[10px] font-bold text-slate-900/80">Fast Dispatch</p>
                   </div>
                 </div>
 

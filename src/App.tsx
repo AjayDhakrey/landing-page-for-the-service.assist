@@ -218,6 +218,7 @@ export default function App() {
 
         {/* 4. AI Home Diagnostic Problem Solver (Mint BG & 3D Robot) */}
         <AiDiagnosticWidget
+          currentUser={currentUser}
           onBookService={(service) => {
             handleInstantBook(service);
           }}
@@ -231,6 +232,7 @@ export default function App() {
           onAddToCart={handleAddToCart}
           onInstantBook={handleInstantBook}
           searchQuery={searchQuery}
+          currentUser={currentUser}
         />
 
         {/* 6. How Service Assist Works (3 Simple Steps + Customer Image) */}
@@ -246,7 +248,10 @@ export default function App() {
         <Testimonials />
 
         {/* 9. Your Home, Our Priority (Living Room Pre-Footer CTA) */}
-        <PreFooterCta onInstantBook={() => handleInstantBook(SERVICES[0])} />
+        <PreFooterCta 
+          currentUser={currentUser}
+          onInstantBook={() => handleInstantBook(SERVICES[0])} 
+        />
 
         {/* Pro Partner Modal */}
         <ProPartnerCta

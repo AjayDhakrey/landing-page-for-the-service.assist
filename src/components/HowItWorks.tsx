@@ -84,13 +84,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onBookService }) => {
 
             </div>
 
-            {/* Book a service CTA Button */}
+            {/* Explore services CTA Button */}
             <div className="pt-2 text-center sm:text-left">
               <button
                 onClick={handleBookClick}
                 className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-sm rounded-full shadow-lg shadow-emerald-600/30 transition-all inline-flex items-center gap-2 cursor-pointer hover:shadow-xl hover:-translate-y-0.5"
               >
-                <span>Book a service</span>
+                <span>Explore All Services</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -124,7 +124,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onBookService }) => {
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-[11px] font-black text-slate-900 leading-tight">Booking Confirmed</p>
+                      <p className="text-[11px] font-black text-slate-900 leading-tight">Service Confirmed</p>
                       <p className="text-[9px] text-slate-400">An expert will arrive in 15 mins</p>
                     </div>
                   </div>
@@ -133,7 +133,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onBookService }) => {
                   <div className="space-y-1.5 text-[10px]">
                     <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
-                      <span>Booking Received</span>
+                      <span>Request Received</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />

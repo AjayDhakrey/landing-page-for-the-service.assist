@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { 
   Star, 
   ShieldCheck, 
-  ArrowRight
+  ArrowRight,
+  User
 } from 'lucide-react';
-import { ServiceItem, CartItem } from '../types';
+import { ServiceItem, CartItem, UserProfile } from '../types';
 import { SERVICES } from '../data/servicesData';
 
 interface PopularServicesProps {
@@ -14,6 +15,7 @@ interface PopularServicesProps {
   onAddToCart?: (service: ServiceItem) => void;
   onInstantBook: (service: ServiceItem) => void;
   searchQuery?: string;
+  currentUser?: UserProfile | null;
 }
 
 const TABS = [
@@ -30,6 +32,7 @@ const TABS = [
 
 export const PopularServices: React.FC<PopularServicesProps> = ({
   onInstantBook,
+  currentUser,
 }) => {
   const [activeTab, setActiveTab] = useState('all');
 
@@ -154,12 +157,24 @@ export const PopularServices: React.FC<PopularServicesProps> = ({
                     )}
                   </div>
 
-                  <button
-                    onClick={() => onInstantBook(item)}
-                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer"
-                  >
-                    Book Now
-                  </button>
+                  {currentUser ? (
+                    <button
+                      onClick={() => onInstantBook(item)}
+                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/25 transition-all cursor-pointer flex items-center gap-1"
+                    >
+                      <span>Request Pro</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => onInstantBook(item)}
+                      className="px-3 sm:px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white font-bold text-xs shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+                      title="Sign in to book this service"
+                    >
+                      <User className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Sign In to Book</span>
+                    </button>
+                  )}
                 </div>
 
               </div>

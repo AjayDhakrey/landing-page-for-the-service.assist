@@ -88,7 +88,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     ₹{service.price}
                   </span>
                   <span className="text-[11px] text-emerald-700 font-bold group-hover:underline inline-flex items-center gap-0.5">
-                    Book <ArrowRight className="w-3 h-3" />
+                    Select <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
               </div>

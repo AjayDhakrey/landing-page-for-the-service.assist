@@ -138,7 +138,7 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
               <span className="text-slate-900">every job at home</span>
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
-              Choose a service, see the starting price, and book a verified professional.
+              Explore certified home services, clear pricing inclusions, and verified technician coverage.
             </p>
           </div>
 
@@ -213,7 +213,7 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
                     }}
                     className="px-2 xs:px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-[10px] sm:text-xs shadow-xs shadow-emerald-600/30 transition-all flex items-center gap-0.5 sm:gap-1 cursor-pointer group-hover:shadow-md shrink-0"
                   >
-                    <span>Book</span>
+                    <span>Explore</span>
                     <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 </div>

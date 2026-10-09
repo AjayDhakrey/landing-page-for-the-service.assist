@@ -1,11 +1,16 @@
 import React from 'react';
-import { ArrowRight, UserCheck, ShieldCheck, Tag } from 'lucide-react';
+import { ArrowRight, UserCheck, ShieldCheck, Tag, User } from 'lucide-react';
+import { UserProfile } from '../types';
 
 interface PreFooterCtaProps {
   onInstantBook: () => void;
+  currentUser?: UserProfile | null;
 }
 
-export const PreFooterCta: React.FC<PreFooterCtaProps> = ({ onInstantBook }) => {
+export const PreFooterCta: React.FC<PreFooterCtaProps> = ({ 
+  onInstantBook,
+  currentUser,
+}) => {
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 bg-slate-950 text-white">
       {/* Background Image with Dark Vignette */}
@@ -27,15 +32,24 @@ export const PreFooterCta: React.FC<PreFooterCtaProps> = ({ onInstantBook }) => 
               Your Home, Our Priority
             </h2>
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              Book trusted professionals and get reliable home services today.
+              Connect with certified professionals and get fast, reliable home services today.
             </p>
             <div className="pt-2">
               <button
                 onClick={onInstantBook}
                 className="px-7 py-3.5 bg-emerald-400 hover:bg-emerald-300 active:bg-emerald-500 text-slate-950 font-black text-sm sm:text-base rounded-full shadow-xl shadow-emerald-400/25 transition-all inline-flex items-center gap-2 cursor-pointer"
               >
-                <span>Book Service Now</span>
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                {currentUser ? (
+                  <>
+                    <span>Request an Expert</span>
+                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  </>
+                ) : (
+                  <>
+                    <User className="w-4 h-4 stroke-[2.5]" />
+                    <span>Sign In to Get Started</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -53,13 +67,13 @@ export const PreFooterCta: React.FC<PreFooterCtaProps> = ({ onInstantBook }) => 
               </span>
             </div>
 
-            {/* Badge 2: Secure Booking */}
+            {/* Badge 2: 100% Insured Care */}
             <div className="flex flex-col items-center text-center space-y-2 animate-float-badge-2 group cursor-default">
               <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-400 shadow-xl group-hover:scale-110 group-hover:border-emerald-400/60 group-hover:bg-emerald-500/20 group-hover:shadow-emerald-500/25 transition-all duration-300">
                 <ShieldCheck className="w-7 h-7" />
               </div>
               <span className="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">
-                Secure Booking
+                100% Insured Care
               </span>
             </div>
 

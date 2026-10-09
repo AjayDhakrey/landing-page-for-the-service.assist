@@ -6,14 +6,16 @@ import {
   AlertCircle, 
   CheckCircle2, 
   Wrench,
-  Loader2
+  Loader2,
+  User
 } from 'lucide-react';
-import { DiagnosticResult, ServiceItem } from '../types';
+import { DiagnosticResult, ServiceItem, UserProfile } from '../types';
 import { SERVICES } from '../data/servicesData';
 import { Tilt3DCard } from './Tilt3DCard';
 
 interface AiDiagnosticWidgetProps {
   onBookService: (service: ServiceItem) => void;
+  currentUser?: UserProfile | null;
 }
 
 const COMMON_ISSUES = [
@@ -23,7 +25,10 @@ const COMMON_ISSUES = [
   { label: 'Cleaning & Repairs', query: 'Need deep cleaning for living room sofa and door hinge repair' },
 ];
 
-export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({ onBookService }) => {
+export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({ 
+  onBookService,
+  currentUser,
+}) => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DiagnosticResult | null>(null);
@@ -297,8 +302,17 @@ export const AiDiagnosticWidget: React.FC<AiDiagnosticWidgetProps> = ({ onBookSe
                 onClick={handleBookDiagnosedService}
                 className="w-full sm:w-auto px-7 py-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-extrabold text-sm rounded-full shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Book Service Now</span>
-                <ArrowRight className="w-4 h-4" />
+                {currentUser ? (
+                  <>
+                    <span>Request Diagnosed Pro</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                ) : (
+                  <>
+                    <User className="w-4 h-4 text-emerald-200" />
+                    <span>Sign In to Request Solution</span>
+                  </>
+                )}
               </button>
             </div>
 
